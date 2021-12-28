@@ -1,12 +1,5 @@
 from copy import deepcopy
-
-
-def immutable(self, *args, **kwargs):
-    r"""
-    Function for not implemented method since the object is immutable.
-    :param self: The immutable object which has an update function called.
-    """
-    raise AttributeError(f"'{self.__class__.__name__}' object is read-only")
+import platform
 
 
 class ImmutableDict(dict):
@@ -32,9 +25,7 @@ class ImmutableDict(dict):
         Calculates the hash if all values are hashable, otherwise raises a 
         TypeError.
         """
-        print("ImmutableDict.hash")
-
-        if self._hash != None:
+        if self._hash is not None:
             _hash = self._hash
         else:
             try:
@@ -58,26 +49,21 @@ class ImmutableDict(dict):
 
         Format : <Class Name>(<Body>)
         """
-        print("ImmutableDict.repr")
-
         class_name = self.__class__.__name__
         body = super().__repr__(*args, **kwargs)
 
         return f"{class_name}({body})"
 
     def copy(self):
-        print("ImmutableDict.copy")
         r"""
         Return the object itself, as it's an immutable.
         """
-
         return self
 
     def __copy__(self, *args, **kwargs):
         r"""
         See copy().
         """
-
         return self.copy()
 
     def __deepcopy__(self, *args, **kwargs):
@@ -85,30 +71,40 @@ class ImmutableDict(dict):
         As for tuples, if hashable, see copy(); otherwise, it returns a 
         deepcopy.
         """
-
         try:
             hash(self)
         except TypeError:
-            tmp = deepcopy(dict(self))
+            tmp_deep_copy = deepcopy(dict(self))
 
-            return self.__class__(tmp)
+            return self.__class__(tmp_deep_copy)
 
         return self.__copy__(*args, **kwargs)
 
     def __reduce__(self, *args, **kwargs):
-        r"""
-        Support for `pickle`.
         """
-
-        return self.__class__, (dict(self),)
+        Unsupported method, will raise a TypeError.
+        :raise: TypeError
+        """
+        raise TypeError(
+            f"'{self.__class__.__name__}' object doesn't support item "
+            "update"
+        )
 
     def __setitem__(self, key, val, *args, **kwargs):
+        """
+        Unsupported method, will raise a TypeError.
+        :raise: TypeError
+        """
         raise TypeError(
             f"'{self.__class__.__name__}' object doesn't support item "
             "assignment"
         )
 
     def __delitem__(self, key, *args, **kwargs):
+        """
+        Unsupported method, will raise a TypeError.
+        :raise: TypeError
+        """
         raise TypeError(
             f"'{self.__class__.__name__}' object doesn't support item "
             "deletion"
@@ -121,18 +117,38 @@ class ImmutableDict(dict):
         r"""
         Use the method dict.fromkeys and take the result to generate the Immutable Dict.
         :param cls: Class - Class where the methode is defined in.
+        :return: ImmutableDict.
         """
         return cls(dict.fromkeys(*args, **kwargs))
 
 
+def immutable(self, *args, **kwargs):
+    """
+    Function for not implemented method since the object is immutable.
+    :param self: The immutable object which has an update function called.
+    :raise: AttributeError - Raised when the method is called.
+    """
+    raise AttributeError(f"'{self.__class__.__name__}' object is read-only")
+
+
 def immutabledict_or(self, other, *args, **kwargs):
-    print("immutabledict_or")
+    """
+    Override of the function OR for ImmutableDict.
+    :param self: First ImmutableDict to compare.
+    :param other: Second ImmutableDict to compare.
+    :return: ImmutableDict - The first ImmutableDict will be return without modifications.
+    """
     return self
 
 
-ImmutableDict.___or__ = immutabledict_or
-ImmutableDict.__ior__ = immutabledict_or  # In place operator : https://docs.python.org/3/library/operator.html#in-place-operators
+# ----- Overrides ----- #
+# OR operator
+ImmutableDict.__or__ = immutabledict_or
 
+# In place operator : https://docs.python.org/3/library/operator.html#in-place-operators
+ImmutableDict.__ior__ = immutabledict_or
+
+# Various dict methods
 ImmutableDict.clear = immutable
 ImmutableDict.pop = immutable
 ImmutableDict.popitem = immutable
@@ -142,47 +158,30 @@ ImmutableDict.__delattr__ = immutable
 ImmutableDict.__setattr__ = immutable
 
 
-def frozen_new(e4b37cdf_d78a_4632_bade_6f0579d8efac, *args, **kwargs):
-    print("frozen_new")
-    print(e4b37cdf_d78a_4632_bade_6f0579d8efac)
-    cls = e4b37cdf_d78a_4632_bade_6f0579d8efac
-
+def immutabledict_new(cls, *args, **kwargs):
+    """
+    Method to create a new ImmutableDict.
+    """
     has_kwargs = bool(kwargs)
     continue_creation = True
 
-    # check if there's only an argument and it's of the same class
+    # Do some checks to avoid to create an ImmutableDict from another ImmutableDict.
     if len(args) == 1 and not has_kwargs:
         it = args[0]
 
-        # no isinstance, to avoid subclassing problems
-        if (
-                (it.__class__ == ImmutableDict and cls == ImmutableDict)
-        ):
+        if it.__class__ == ImmutableDict and cls == ImmutableDict:
             self = it
             continue_creation = False
 
+    # If it's not a ImmutableDict inception
     if continue_creation:
         self = dict.__new__(cls, *args, **kwargs)
-
         dict.__init__(self, *args, **kwargs)
-
-        # empty singleton - start
-
-        if self.__class__ == ImmutableDict and not len(self):
-            try:
-                self = cls.empty
-                continue_creation = False
-            except AttributeError:
-                cls.empty = self
-
-        # empty singleton - end
-
-        if continue_creation:
-            object.__setattr__(self, "_hash", None)
+        object.__setattr__(self, "_hash", self.__hash__)
 
     return self
 
 
-ImmutableDict.__new__ = frozen_new
+ImmutableDict.__new__ = immutabledict_new
 
 __all__ = (ImmutableDict.__name__,)
