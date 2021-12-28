@@ -1,6 +1,6 @@
 # Python Immutable Dict
 
-![badge](https://img.shields.io/badge/version-0.2.0-blue)
+![badge](https://img.shields.io/badge/version-0.3.0-blue)
 
 This library contains the **ImmutableDict**, a Python dictionary which can't be updated.
 
@@ -15,9 +15,27 @@ This library contains the **ImmutableDict**, a Python dictionary which can't be 
 ```python
 from adaendra_immutable_dict.AdaendraImmutableDict import AdaendraImmutableDict
 
+# Empty Immutable Dict
+immutable_dict = AdaendraImmutableDict({})
 
+# Non empty Immutable Dict
+immutable_dict = AdaendraImmutableDict({"hello": "world"})
+
+# Get a value
+immutable_dict["hello"]
+#> world
+
+# Copy dict
+immutable_dict_copy = immutable_dict.copy()
+
+# Create an immutable dict from "fromkeys" method
+immutable_dict = AdaendraImmutableDict.fromkeys(["a", "b"], "1")
 ```
 
+---
+
+## Documentation
+- [PyPi](./documentation/pypi.md)
 
 ---
 
