@@ -1,5 +1,4 @@
 from copy import deepcopy
-import platform
 
 
 class ImmutableDict(dict):
@@ -86,8 +85,7 @@ class ImmutableDict(dict):
         :raise: TypeError
         """
         raise TypeError(
-            f"'{self.__class__.__name__}' object doesn't support item "
-            "update"
+            f"'{self.__class__.__name__}' object doesn't support item update"
         )
 
     def __setitem__(self, key, val, *args, **kwargs):
@@ -96,8 +94,7 @@ class ImmutableDict(dict):
         :raise: TypeError
         """
         raise TypeError(
-            f"'{self.__class__.__name__}' object doesn't support item "
-            "assignment"
+            f"'{self.__class__.__name__}' object doesn't support item assignment"
         )
 
     def __delitem__(self, key, *args, **kwargs):
@@ -106,8 +103,7 @@ class ImmutableDict(dict):
         :raise: TypeError
         """
         raise TypeError(
-            f"'{self.__class__.__name__}' object doesn't support item "
-            "deletion"
+            f"'{self.__class__.__name__}' object doesn't support item deletion"
         )
 
     # Decorator to let know that this method is available for the static object and all its instances.
