@@ -19,19 +19,10 @@ class ImmutableDict(dict):
     :param dict: dict - The dictionary to set as immutable.
     """
 
-    # Little tric to save RAM -> https://book.pythontips.com/en/latest/__slots__magic.html
+    # Little trick to save RAM -> https://book.pythontips.com/en/latest/__slots__magic.html
     __slots__ = (
         "_hash",
     )
-
-    # Decorator to let know that this method is available for the static object and all its instances.
-    @classmethod
-    def fromkeys(cls, *args, **kwargs):
-        r"""
-        Use the method dict.fromkeys and take the result to generate the Immutable Dict.
-        """
-        print(cls)
-        return cls(dict.fromkeys(*args, **kwargs))
 
     def __init__(self, *args, **kwargs):
         pass
@@ -122,6 +113,16 @@ class ImmutableDict(dict):
             f"'{self.__class__.__name__}' object doesn't support item "
             "deletion"
         )
+
+    # Decorator to let know that this method is available for the static object and all its instances.
+    # More info : https://www.programiz.com/python-programming/methods/built-in/classmethod
+    @classmethod
+    def fromkeys(cls, *args, **kwargs):
+        r"""
+        Use the method dict.fromkeys and take the result to generate the Immutable Dict.
+        :param cls: Class - Class where the methode is defined in.
+        """
+        return cls(dict.fromkeys(*args, **kwargs))
 
 
 def immutabledict_or(self, other, *args, **kwargs):
