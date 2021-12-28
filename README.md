@@ -1,5 +1,14 @@
 # Python Immutable Dict
-An immutable dict for Python.
+
+![badge](https://img.shields.io/badge/version-0.1.0-blue)
+
+This library contains the **ImmutableDict**, a Python dictionary which can't be updated.
+
+## How to use it
+1. Install it from [**pip**](https://pypi.org/project/adaendra-immutable-dict/)
+> pip install adaendra-immutable-dict
+2. 
+
 
 ---
 
