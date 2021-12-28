@@ -1,12 +1,12 @@
 import unittest
 from operator import ior
 
-from src.immutable_dict.ImmutableDict import ImmutableDict
+from src.adaendra_immutable_dict.AdaendraImmutableDict import AdaendraImmutableDict
 
 
 def test_or():
-    immutable_dict_1 = ImmutableDict({"a": "1"})
-    immutable_dict_2 = ImmutableDict({"b": "2"})
+    immutable_dict_1 = AdaendraImmutableDict({"a": "1"})
+    immutable_dict_2 = AdaendraImmutableDict({"b": "2"})
 
     result = immutable_dict_1 | immutable_dict_2
 
@@ -16,8 +16,8 @@ def test_or():
 
 
 def test_ior():
-    immutable_dict_1 = ImmutableDict({"a": "1"})
-    immutable_dict_2 = ImmutableDict({"b": "2"})
+    immutable_dict_1 = AdaendraImmutableDict({"a": "1"})
+    immutable_dict_2 = AdaendraImmutableDict({"b": "2"})
 
     result = ior(immutable_dict_1, immutable_dict_2)
 

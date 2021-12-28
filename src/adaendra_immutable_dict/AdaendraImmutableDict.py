@@ -1,7 +1,7 @@
 from copy import deepcopy
 
 
-class ImmutableDict(dict):
+class AdaendraImmutableDict(dict):
     r"""
     Class to create an immutable dictionary.
 
@@ -113,7 +113,7 @@ class ImmutableDict(dict):
         r"""
         Use the method dict.fromkeys and take the result to generate the Immutable Dict.
         :param cls: Class - Class where the methode is defined in.
-        :return: ImmutableDict.
+        :return: AdaendraImmutableDict.
         """
         return cls(dict.fromkeys(*args, **kwargs))
 
@@ -127,49 +127,49 @@ def immutable(self, *args, **kwargs):
     raise AttributeError(f"'{self.__class__.__name__}' object is read-only")
 
 
-def immutabledict_or(self, other, *args, **kwargs):
+def AdaendraImmutableDict_or(self, other, *args, **kwargs):
     """
-    Override of the function OR for ImmutableDict.
-    :param self: First ImmutableDict to compare.
-    :param other: Second ImmutableDict to compare.
-    :return: ImmutableDict - The first ImmutableDict will be return without modifications.
+    Override of the function OR for AdaendraImmutableDict.
+    :param self: First AdaendraImmutableDict to compare.
+    :param other: Second AdaendraImmutableDict to compare.
+    :return: AdaendraImmutableDict - The first AdaendraImmutableDict will be return without modifications.
     """
     return self
 
 
 # ----- Overrides ----- #
 # OR operator
-ImmutableDict.__or__ = immutabledict_or
+AdaendraImmutableDict.__or__ = AdaendraImmutableDict_or
 
 # In place operator : https://docs.python.org/3/library/operator.html#in-place-operators
-ImmutableDict.__ior__ = immutabledict_or
+AdaendraImmutableDict.__ior__ = AdaendraImmutableDict_or
 
 # Various dict methods
-ImmutableDict.clear = immutable
-ImmutableDict.pop = immutable
-ImmutableDict.popitem = immutable
-ImmutableDict.setdefault = immutable
-ImmutableDict.update = immutable
-ImmutableDict.__delattr__ = immutable
-ImmutableDict.__setattr__ = immutable
+AdaendraImmutableDict.clear = immutable
+AdaendraImmutableDict.pop = immutable
+AdaendraImmutableDict.popitem = immutable
+AdaendraImmutableDict.setdefault = immutable
+AdaendraImmutableDict.update = immutable
+AdaendraImmutableDict.__delattr__ = immutable
+AdaendraImmutableDict.__setattr__ = immutable
 
 
-def immutabledict_new(cls, *args, **kwargs):
+def AdaendraImmutableDict_new(cls, *args, **kwargs):
     """
-    Method to create a new ImmutableDict.
+    Method to create a new AdaendraImmutableDict.
     """
     has_kwargs = bool(kwargs)
     continue_creation = True
 
-    # Do some checks to avoid to create an ImmutableDict from another ImmutableDict.
+    # Do some checks to avoid to create an AdaendraImmutableDict from another AdaendraImmutableDict.
     if len(args) == 1 and not has_kwargs:
         it = args[0]
 
-        if it.__class__ == ImmutableDict and cls == ImmutableDict:
+        if it.__class__ == AdaendraImmutableDict and cls == AdaendraImmutableDict:
             self = it
             continue_creation = False
 
-    # If it's not a ImmutableDict inception
+    # If it's not a AdaendraImmutableDict inception
     if continue_creation:
         self = dict.__new__(cls, *args, **kwargs)
         dict.__init__(self, *args, **kwargs)
@@ -178,6 +178,6 @@ def immutabledict_new(cls, *args, **kwargs):
     return self
 
 
-ImmutableDict.__new__ = immutabledict_new
+AdaendraImmutableDict.__new__ = AdaendraImmutableDict_new
 
-__all__ = (ImmutableDict.__name__,)
+__all__ = (AdaendraImmutableDict.__name__,)
