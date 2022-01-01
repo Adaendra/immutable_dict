@@ -1,6 +1,6 @@
 # Python Immutable Dict
 
-![badge](https://img.shields.io/badge/version-0.3.0-blue)
+![badge](https://img.shields.io/badge/version-1.0.0-blue)
 
 This library contains the **ImmutableDict**, a Python dictionary which can't be updated.
 

@@ -2,7 +2,7 @@ from copy import deepcopy
 
 
 class AdaendraImmutableDict(dict):
-    r"""
+    """
     Class to create an immutable dictionary.
 
     It works as same as `dict`, without methods that can change the
@@ -20,7 +20,7 @@ class AdaendraImmutableDict(dict):
         pass
 
     def __hash__(self, *args, **kwargs):
-        r"""
+        """
         Calculates the hash if all values are hashable, otherwise raises a 
         TypeError.
         """
@@ -42,7 +42,7 @@ class AdaendraImmutableDict(dict):
         return _hash
 
     def __repr__(self, *args, **kwargs):
-        r"""
+        """
         Identical to dict.__repr__().
         Represent the class object as a String.
 
@@ -54,19 +54,19 @@ class AdaendraImmutableDict(dict):
         return f"{class_name}({body})"
 
     def copy(self):
-        r"""
+        """
         Return the object itself, as it's an immutable.
         """
         return self
 
     def __copy__(self, *args, **kwargs):
-        r"""
+        """
         See copy().
         """
         return self.copy()
 
     def __deepcopy__(self, *args, **kwargs):
-        r"""
+        """
         As for tuples, if hashable, see copy(); otherwise, it returns a 
         deepcopy.
         """
@@ -110,7 +110,7 @@ class AdaendraImmutableDict(dict):
     # More info : https://www.programiz.com/python-programming/methods/built-in/classmethod
     @classmethod
     def fromkeys(cls, *args, **kwargs):
-        r"""
+        """
         Use the method dict.fromkeys and take the result to generate the Immutable Dict.
         :param cls: Class - Class where the methode is defined in.
         :return: AdaendraImmutableDict.

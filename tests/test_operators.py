@@ -26,6 +26,5 @@ def test_ior():
     assert result != immutable_dict_2
 
 
-
 if __name__ == '__main__':
     unittest.main()
